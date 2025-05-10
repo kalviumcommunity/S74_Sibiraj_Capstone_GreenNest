@@ -27,9 +27,32 @@ const addSeed = async (req, res) => {
     const savedSeed = await newSeed.save();
     res.status(201).json(savedSeed);
   } catch (err) {
-    console.error("❌ Error saving seed:", err);
     res.status(500).json({ message: err.message });
   }
 };
 
-module.exports = { getSeeds, addSeed };
+
+const updateSeed = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const updatedSeed = await Seed.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedSeed) {
+      return res.status(404).json({ message: 'Seed not found' });
+    }
+
+    res.status(200).json(updatedSeed);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = {
+  getSeeds,
+  addSeed,
+  updateSeed,
+};

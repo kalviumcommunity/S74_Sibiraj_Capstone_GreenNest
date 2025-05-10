@@ -1,12 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { getSeeds, addSeed } = require('../controllers/seedController');
+const { getSeeds, addSeed, updateSeed } = require('../controllers/seedController');
 
 
-router.get('/', getSeeds);
-
-
-
-router.post('/', addSeed);
+router.get('/', getSeeds);            
+router.post('/', addSeed);            
+router.put('/:id', updateSeed);       
 
 module.exports = router;
