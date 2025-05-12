@@ -11,5 +11,7 @@ const seedSchema = new mongoose.Schema({
   timestamps: true,
 });
 
+
 const Seed = mongoose.model('Seed', seedSchema);
 module.exports = Seed;
+
