@@ -55,3 +55,9 @@ GreenNest is an online platform focused on supporting sustainable gardening by o
 - Deploy frontend on Netlify & backend on Render
 - Prepare user documentation & a demo video
 - Perform final testing & refinements
+
+---
+
+Backend Deployment Link:
+
+https://dashboard.render.com/web/srv-d0gugiadbo4c73bpab20/deploys/dep-d0gugiidbo4c73bpabfg
