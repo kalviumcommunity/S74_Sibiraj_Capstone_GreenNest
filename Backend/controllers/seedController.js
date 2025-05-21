@@ -51,8 +51,22 @@ const updateSeed = async (req, res) => {
   }
 };
 
+const deleteSeed = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deleted = await Seed.findByIdAndDelete(id);
+    if (!deleted) {
+      return res.status(404).json({ message: 'Seed not found' });
+    }
+    res.status(200).json({ message: 'Seed deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   getSeeds,
   addSeed,
   updateSeed,
+  deleteSeed
 };
