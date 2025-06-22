@@ -1,14 +1,9 @@
-const express = require('express');
+import express from 'express';
+import { getAllSeeds, addSeed } from '../controllers/seedController.js';
+
 const router = express.Router();
-const seedController = require('../controllers/seedController');
-const authenticateToken = require('../middleware/authMiddleware');
 
-// Public
-router.get('/', seedController.getSeeds);
+router.get('/', getAllSeeds);
+router.post('/', addSeed);
 
-// Protected
-router.post('/', authenticateToken, seedController.addSeed);
-router.put('/:id', authenticateToken, seedController.updateSeed);
-router.delete('/:id', authenticateToken, seedController.deleteSeed);
-
-module.exports = router;
+export default router;

@@ -1,21 +1,9 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
+import express from 'express';
+import { registerUser, loginUser } from '../controllers/userController.js';
 
 const router = express.Router();
 
-const JWT_SECRET = "greennest_secret_key";
+router.post('/register', registerUser);
+router.post('/login', loginUser);
 
-// Dummy login route – later replace with real user DB
-router.post('/login', (req, res) => {
-  const { username } = req.body;
-
-  if (!username) return res.status(400).json({ message: "Username required" });
-
-  const user = { username }; 
-
-  const token = jwt.sign(user, JWT_SECRET, { expiresIn: '1h' });
-
-  res.json({ token });
-});
-
-module.exports = router;
+export default router;
