@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const seedSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -13,5 +13,7 @@ const seedSchema = new mongoose.Schema({
 
 
 const Seed = mongoose.model('Seed', seedSchema);
-module.exports = Seed;
+
+
+export default Seed;
 

@@ -1,33 +1,26 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import seedRoutes from './routes/seedRoutes.js';
+import chatbotRoutes from './routes/chatbotRoutes.js';
 
 dotenv.config();
-
 const app = express();
 app.use(express.json());
 
-const authRoutes = require('./routes/authRoutes');
-const seedRoutes = require('./routes/seedRoutes');
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/seeds', seedRoutes);
+app.use('/api/chatbot', chatbotRoutes);
 
-app.use('/', authRoutes);
-app.use('/seeds', seedRoutes);
-
-// MongoDB Connection
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => {
-  console.log('Connected to MongoDB ✅');
-
-  // Start server only after DB is connected
-  const PORT = process.env.PORT || 5002;
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-})
-.catch((err) => {
-  console.error('Failed to connect to MongoDB ❌', err);
-});
-  
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("MongoDB Connected");
+    app.listen(process.env.PORT || 5000, () =>
+      console.log("Server running on port", process.env.PORT || 5000)
+    );
+  })
+  .catch((err) => console.log(err));

@@ -1,72 +1,20 @@
-const Seed = require('../models/Seed');
+import Seed from '../models/Seed.js';
 
-
-const getSeeds = async (req, res) => {
+export const getAllSeeds = async (req, res) => {
   try {
     const seeds = await Seed.find();
-    res.status(200).json(seeds);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.json(seeds);
+  } catch {
+    res.status(500).json({ message: 'Error fetching seeds' });
   }
 };
 
-
-const addSeed = async (req, res) => {
-  const { name, category, price, stock, image, ecoPoints } = req.body;
-
-  const newSeed = new Seed({
-    name,
-    category,
-    price,
-    stock,
-    image,
-    ecoPoints,
-  });
-
+export const addSeed = async (req, res) => {
   try {
-    const savedSeed = await newSeed.save();
-    res.status(201).json(savedSeed);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    const newSeed = new Seed(req.body);
+    await newSeed.save();
+    res.status(201).json(newSeed);
+  } catch {
+    res.status(500).json({ message: 'Error adding seed' });
   }
-};
-
-
-const updateSeed = async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const updatedSeed = await Seed.findByIdAndUpdate(id, req.body, {
-      new: true,
-      runValidators: true,
-    });
-
-    if (!updatedSeed) {
-      return res.status(404).json({ message: 'Seed not found' });
-    }
-
-    res.status(200).json(updatedSeed);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-const deleteSeed = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const deleted = await Seed.findByIdAndDelete(id);
-    if (!deleted) {
-      return res.status(404).json({ message: 'Seed not found' });
-    }
-    res.status(200).json({ message: 'Seed deleted successfully' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-module.exports = {
-  getSeeds,
-  addSeed,
-  updateSeed,
-  deleteSeed
 };
