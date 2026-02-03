@@ -1,22 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { chatbotApi } from "../api";
 import "./../App.css";
 
 function Home() {
+  const { user, logout } = useAuth();
+  const [sageInput, setSageInput] = useState("");
+  const [sageReply, setSageReply] = useState("");
+  const [sageLoading, setSageLoading] = useState(false);
+
+  const handleSageAsk = async (e) => {
+    e?.preventDefault();
+    if (!sageInput.trim()) return;
+    setSageLoading(true);
+    setSageReply("");
+    try {
+      const { data } = await chatbotApi.suggestFertilizer(sageInput.trim());
+      setSageReply(data.suggestion);
+    } catch {
+      setSageReply("Sorry, I couldn't process that. Try a seed name like tomato, chilli, or brinjal.");
+    } finally {
+      setSageLoading(false);
+    }
+  };
+
   return (
     <div>
       {/* Navbar */}
       <nav className="navbar">
-        <div className="logo">🌿 GreenNest</div>
+        <Link to="/" className="logo">🌿 GreenNest</Link>
         <ul className="nav-links">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Seeds</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="#">Plant Tracker</a></li>
-          <li><a href="#">Eco-Points</a></li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/seeds">Seeds</Link></li>
+          <li><a href="#tips">Services</a></li>
+          <li><a href="#tips">Plant Tracker</a></li>
+          <li><a href="#summary">Eco-Points</a></li>
         </ul>
         <div className="nav-actions">
-          <a href="#">Sign in</a>
-          <button className="join-btn">Join GreenNest</button>
+          {user ? (
+            <>
+              <span className="user-badge">Welcome, {user.username || 'User'}!</span>
+              <button className="join-btn" onClick={logout}>Logout</button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">Sign in</Link>
+              <Link to="/register" className="join-btn link-btn">Join GreenNest</Link>
+            </>
+          )}
         </div>
       </nav>
 
@@ -36,8 +68,8 @@ function Home() {
               GreenNest offers everything you need to create and maintain a thriving, sustainable garden that nurtures both you and the environment.
             </p>
             <div className="hero-buttons">
-              <button className="explore-btn">Organic Seeds</button>
-              <button className="book-btn">Book Services</button>
+              <a href="#summary"><button className="explore-btn">Organic Seeds</button></a>
+              <a href="#tips"><button className="book-btn">Book Services</button></a>
             </div>
           </div>
           {/* Sage Chatbot */}
@@ -47,19 +79,34 @@ function Home() {
               <span>AI Gardening Assistant</span>
             </div>
             <div className="sage-messages">
-              Hi! Ask me about your plants, tools, or composting 🌱
-              <span className="time">9:41 AM</span>
+              {sageReply ? (
+                <>
+                  <strong>Fertilizer tip:</strong> {sageReply}
+                  <span className="time">Just now</span>
+                </>
+              ) : (
+                <>
+                  Hi! Type a seed name (e.g. tomato, chilli, brinjal) for fertilizer suggestions 🌱
+                  <span className="time">Sage</span>
+                </>
+              )}
             </div>
-            <div className="sage-input">
-              <input type="text" placeholder="Ask Sage..." />
-              <button className="send-btn">➤</button>
-            </div>
+            <form className="sage-input" onSubmit={handleSageAsk}>
+              <input
+                type="text"
+                placeholder="Enter seed name..."
+                value={sageInput}
+                onChange={(e) => setSageInput(e.target.value)}
+                disabled={sageLoading}
+              />
+              <button type="submit" className="send-btn" disabled={sageLoading}>➤</button>
+            </form>
           </div>
         </div>
       </div>
 
       {/* Green Summary Section */}
-      <section className="green-summary-cards-section">
+      <section id="summary" className="green-summary-cards-section">
         <h2 className="section-title">Cultivate Your Green Summary</h2>
         <p className="section-desc">GreenNest offers everything you need to create and maintain a thriving, sustainable garden that nurtures both you and the environment</p>
         <div className="summary-cards-grid">
@@ -67,7 +114,7 @@ function Home() {
             <div className="summary-card-icon">🌱</div>
             <h3>Organic Seeds</h3>
             <p>Discover our rich variety of organic seeds for vegetables, herbs, and flowers. Grown naturally, for a healthier garden.</p>
-            <a href="#" className="summary-link">Browse Seeds</a>
+            <Link to="/seeds" className="summary-link">Browse Seeds</Link>
           </div>
           <div className="summary-card">
             <div className="summary-card-icon">🛠️</div>
@@ -91,7 +138,7 @@ function Home() {
       </section>
 
       {/* Sustainable Gardening Tips Section */}
-      <section className="tips-section">
+      <section id="tips" className="tips-section">
         <h2 className="section-title">Sustainable Gardening Tips</h2>
         <p className="section-desc">Explore our collection of eco-friendly gardening practices to help your garden thrive while protecting our planet.</p>
         <div className="tips-grid">
@@ -124,8 +171,8 @@ function Home() {
         <h2>Start Your Sustainable Garden Today</h2>
         <p>Join the GreenNest community and begin your journey towards a greener, more sustainable lifestyle through the joy of gardening.</p>
         <div className="cta-buttons">
-          <button className="cta-create">Create Account</button>
-          <button className="cta-contact">Contact Us</button>
+          <Link to="/register"><button className="cta-create">Create Account</button></Link>
+          <a href="mailto:support@greennest.com"><button className="cta-contact">Contact Us</button></a>
         </div>
       </section>
 

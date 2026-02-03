@@ -83,6 +83,19 @@ body {
   border: 2px solid #22c55e;
 }
 
+.link-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-badge {
+  font-size: 14px;
+  color: #22c55e;
+  font-weight: 600;
+}
+
 @media (max-width: 900px) {
   .navbar {
     flex-direction: column;
@@ -440,6 +453,100 @@ body {
   margin-top: auto;
 }
 
+/* Seeds catalog */
+.seed-card {
+  padding: 16px;
+}
+
+.seed-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+.seed-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.seed-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #14532d;
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 999px;
+}
+
+.seed-price {
+  font-weight: 600;
+  color: #14532d;
+}
+
+.seed-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.seed-qty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #14532d;
+}
+
+.seed-qty select {
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+}
+
+.seed-btn {
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #22c55e;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.seed-btn:hover {
+  background: #16a34a;
+}
+
+.seed-btn.secondary {
+  background: #14532d;
+}
+
+.seed-btn.secondary:hover {
+  background: #0f3d24;
+}
+
+.seed-toast {
+  background: #ecfdf3;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin: 0 auto 16px;
+  max-width: 420px;
+  text-align: center;
+  font-weight: 600;
+}
+
 /* Tips Section - add image and link styles */
 .tip-img {
   width: 100%;
@@ -637,4 +744,150 @@ body {
   background: #ffd700;
   color: #166534;
   box-shadow: 0 4px 16px rgba(20, 83, 45, 0.18);
+}
+
+/* Auth pages */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.auth-card h1 {
+  color: #14532d;
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.auth-subtitle {
+  color: #4caf50;
+  margin-bottom: 24px;
+}
+
+.auth-error {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 10px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.auth-form input {
+  padding: 12px 16px;
+  border: 2px solid #166534;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+}
+
+.auth-form input:focus {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+}
+
+.password-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrap input {
+  padding-right: 44px;
+  flex: 1;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px 8px;
+  opacity: 0.7;
+}
+
+.password-toggle:hover {
+  opacity: 1;
+}
+
+.auth-btn {
+  padding: 12px 24px;
+  background: #22c55e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.auth-btn:hover:not(:disabled) {
+  background: #16a34a;
+}
+
+.auth-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.auth-switch {
+  margin-top: 20px;
+  color: #333;
+}
+
+.auth-switch a {
+  color: #22c55e;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+
+/* Success toast */
+.success-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #22c55e;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+  z-index: 9999;
+  animation: toastIn 0.3s ease;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 }
