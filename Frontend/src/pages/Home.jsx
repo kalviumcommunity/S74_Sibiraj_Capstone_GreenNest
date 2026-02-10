@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { chatbotApi } from "../api";
+import Navbar from "./components/Navbar";
 import "./../App.css";
 
 function Home() {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const [sageInput, setSageInput] = useState("");
   const [sageReply, setSageReply] = useState("");
   const [sageLoading, setSageLoading] = useState(false);
@@ -27,30 +28,7 @@ function Home() {
 
   return (
     <div>
-      {/* Navbar */}
-      <nav className="navbar">
-        <Link to="/" className="logo">🌿 GreenNest</Link>
-        <ul className="nav-links">
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/seeds">Seeds</Link></li>
-          <li><a href="#tips">Services</a></li>
-          <li><a href="#tips">Plant Tracker</a></li>
-          <li><a href="#summary">Eco-Points</a></li>
-        </ul>
-        <div className="nav-actions">
-          {user ? (
-            <>
-              <span className="user-badge">Welcome, {user.username || 'User'}!</span>
-              <button className="join-btn" onClick={logout}>Logout</button>
-            </>
-          ) : (
-            <>
-              <Link to="/login">Sign in</Link>
-              <Link to="/register" className="join-btn link-btn">Join GreenNest</Link>
-            </>
-          )}
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero Section */}
       <div className="hero-section">
@@ -68,8 +46,17 @@ function Home() {
               GreenNest offers everything you need to create and maintain a thriving, sustainable garden that nurtures both you and the environment.
             </p>
             <div className="hero-buttons">
-              <a href="#summary"><button className="explore-btn">Organic Seeds</button></a>
-              <a href="#tips"><button className="book-btn">Book Services</button></a>
+              {user ? (
+                <>
+                  <Link to="/products"><button className="explore-btn">Organic Seeds</button></Link>
+                  <Link to="/services"><button className="book-btn">Book Services</button></Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/login"><button className="explore-btn">Organic Seeds</button></Link>
+                  <a href="#our-services"><button className="book-btn">What We Offer</button></a>
+                </>
+              )}
             </div>
           </div>
           {/* Sage Chatbot */}
@@ -105,6 +92,41 @@ function Home() {
         </div>
       </div>
 
+      {/* What We Offer - For guests */}
+      <section id="our-services" className="green-summary-cards-section" style={{ background: '#f6fef7' }}>
+        <h2 className="section-title">Gardening Services We Provide</h2>
+        <p className="section-desc">Here’s what we do. Login to book these services.</p>
+        <div className="summary-cards-grid">
+          <div className="summary-card">
+            <div className="summary-card-icon">🏠</div>
+            <h3>Terrace Garden Setup</h3>
+            <p>Complete terrace garden design and setup including planters, soil, and initial planting.</p>
+          </div>
+          <div className="summary-card">
+            <div className="summary-card-icon">🪴</div>
+            <h3>Balcony Garden Setup</h3>
+            <p>Compact balcony garden with vertical planters and suitable plants for small spaces.</p>
+          </div>
+          <div className="summary-card">
+            <div className="summary-card-icon">🪱</div>
+            <h3>Vermicompost Setup</h3>
+            <p>Vermicompost bin setup with worms and training to turn kitchen waste into rich compost.</p>
+          </div>
+          <div className="summary-card">
+            <div className="summary-card-icon">🔧</div>
+            <h3>Maintenance Visit</h3>
+            <p>Regular garden maintenance including pruning, fertilizing, and pest check.</p>
+          </div>
+        </div>
+        {!user && (
+          <div style={{ marginTop: 20 }}>
+            <Link to="/login" className="summary-btn" style={{ display: 'inline-block', padding: '12px 24px', textDecoration: 'none' }}>
+              Login to Book Services
+            </Link>
+          </div>
+        )}
+      </section>
+
       {/* Green Summary Section */}
       <section id="summary" className="green-summary-cards-section">
         <h2 className="section-title">Cultivate Your Green Summary</h2>
@@ -114,26 +136,34 @@ function Home() {
             <div className="summary-card-icon">🌱</div>
             <h3>Organic Seeds</h3>
             <p>Discover our rich variety of organic seeds for vegetables, herbs, and flowers. Grown naturally, for a healthier garden.</p>
-            <Link to="/seeds" className="summary-link">Browse Seeds</Link>
+            {user ? <Link to="/products" className="summary-link">Browse Seeds</Link> : <Link to="/login" className="summary-link">Browse Seeds</Link>}
           </div>
           <div className="summary-card">
             <div className="summary-card-icon">🛠️</div>
             <h3>Gardening Services</h3>
             <p>Hire local experts for soil testing, compost setup, irrigation, and more. Sustainable solutions for every garden.</p>
-            <a href="#" className="summary-link">Book Services</a>
+            {user ? <Link to="/services" className="summary-link">Book Services</Link> : <Link to="/login" className="summary-link">Book Services</Link>}
           </div>
           <div className="summary-card">
             <div className="summary-card-icon">📈</div>
             <h3>Plant Tracking</h3>
             <p>Monitor your garden's progress with our plant tracker. Get reminders, tips, and insights for every stage.</p>
-            <a href="#" className="summary-link">Track Plants</a>
+            {user ? <Link to="/tracker" className="summary-link">Track Plants</Link> : <Link to="/login" className="summary-link">Track Plants</Link>}
           </div>
           <div className="summary-card">
             <div className="summary-card-icon">🏆</div>
             <h3>Eco-Points Rewards</h3>
             <p>Earn eco-points for every sustainable action. Redeem rewards and join our green community leaderboard!</p>
-            <a href="#" className="summary-link">View Rewards</a>
+            {user ? <Link to="/rewards" className="summary-link">View Rewards</Link> : <Link to="/login" className="summary-link">View Rewards</Link>}
           </div>
+          {user && (
+            <div className="summary-card">
+              <div className="summary-card-icon">📋</div>
+              <h3>My Dashboard</h3>
+              <p>View your eco points, plants, orders, and activity at a glance.</p>
+              <Link to="/dashboard" className="summary-link">My Dashboard</Link>
+            </div>
+          )}
         </div>
       </section>
 

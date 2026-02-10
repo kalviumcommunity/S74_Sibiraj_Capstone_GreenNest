@@ -17,7 +17,7 @@ export function AuthProvider({ children }) {
           setUser(JSON.parse(storedUser));
         } else {
           const payload = JSON.parse(atob(token.split('.')[1]));
-          setUser({ id: payload.id, username: '' });
+          setUser({ id: payload.id, name: '' });
         }
       } catch {
         localStorage.removeItem('token');
@@ -41,8 +41,8 @@ export function AuthProvider({ children }) {
     return data;
   };
 
-  const register = async (username, email, password) => {
-    const { data } = await authApi.register(username, email, password);
+  const register = async (name, email, password) => {
+    const { data } = await authApi.register(name, email, password);
     if (data?.token) {
       localStorage.setItem('token', data.token);
       if (data.user) {

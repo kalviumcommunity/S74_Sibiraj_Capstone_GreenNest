@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { seedsApi } from '../api';
-import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { seedsApi, ordersApi } from '../api';
+import Navbar from './components/Navbar';
 import '../App.css';
 
 function Seeds() {
-  const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [seeds, setSeeds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -33,41 +33,29 @@ function Seeds() {
     setQuantities((prev) => ({ ...prev, [id]: Number(value) }));
   };
 
+  const [buying, setBuying] = useState(null);
+
   const handleAddToCart = (seed) => {
     const qty = getQty(seed._id);
     setActionMessage(`${seed.name} x${qty} added to cart`);
   };
 
-  const handleBuyNow = (seed) => {
+  const handleBuyNow = async (seed) => {
     const qty = getQty(seed._id);
-    setActionMessage(`Proceeding to buy ${seed.name} x${qty}`);
+    setBuying(seed._id);
+    try {
+      await ordersApi.create([{ seedId: seed._id, quantity: qty }]);
+      navigate('/orders');
+    } catch (e) {
+      setActionMessage(e.response?.data?.message || 'Order failed');
+    } finally {
+      setBuying(null);
+    }
   };
 
   return (
-    <div>
-      <nav className="navbar">
-        <Link to="/" className="logo">🌿 GreenNest</Link>
-        <ul className="nav-links">
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/seeds">Seeds</Link></li>
-          <li><a href="/#tips">Services</a></li>
-          <li><a href="/#summary">Eco-Points</a></li>
-        </ul>
-        <div className="nav-actions">
-          {user ? (
-            <>
-              <span className="user-badge">Welcome, {user.username || 'User'}!</span>
-              <Link to="/">Home</Link>
-              <button className="join-btn" onClick={logout}>Logout</button>
-            </>
-          ) : (
-            <>
-              <Link to="/login">Sign in</Link>
-              <Link to="/register" className="join-btn link-btn">Join GreenNest</Link>
-            </>
-          )}
-        </div>
-      </nav>
+    <div className="min-h-screen bg-eco-light">
+      <Navbar />
 
       <section className="green-summary-cards-section" style={{ paddingTop: 40 }}>
         <h2 className="section-title">Organic Seed Catalog</h2>
@@ -118,8 +106,9 @@ function Seeds() {
                   type="button"
                   className="seed-btn secondary"
                   onClick={() => handleBuyNow(s)}
+                  disabled={buying === s._id}
                 >
-                  Buy Now
+                  {buying === s._id ? 'Placing...' : 'Buy Now'}
                 </button>
               </div>
             </div>

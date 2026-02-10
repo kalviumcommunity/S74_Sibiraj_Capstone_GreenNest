@@ -1,8 +1,8 @@
 import express from 'express';
-import { suggestFertilizer } from '../controllers/chatbotController.js';
+import { chat, suggestFertilizer } from '../controllers/chatbotController.js';
 
 const router = express.Router();
-
-router.post('/', suggestFertilizer);
+router.post('/', chat);
+router.post('/fertilizer', suggestFertilizer);
 
 export default router;

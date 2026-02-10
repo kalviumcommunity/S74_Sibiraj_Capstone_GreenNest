@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import '../App.css';
 
 function Register() {
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -18,7 +18,7 @@ function Register() {
     setError('');
     setLoading(true);
     try {
-      await register(username, email, password);
+      await register(name, email, password);
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
@@ -42,9 +42,9 @@ function Register() {
         <form onSubmit={handleSubmit} className="auth-form">
           <input
             type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
           />
           <input

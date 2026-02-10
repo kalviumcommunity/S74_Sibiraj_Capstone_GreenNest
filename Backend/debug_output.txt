@@ -1,0 +1,54 @@
+Connected to DB
+Found 13 products
+Product: "Tomato Seed"
+  Image: "https://example.com/tomato.jpg"
+  Length: 30
+-------------------
+Product: "Tomato Seed"
+  Image: "https://example.com/tomato.jpg"
+  Length: 30
+-------------------
+Product: "carrot"
+  Image: "https://seed2plant.in/cdn/shop/products/carrotseeds.jpg?v=1604032858"
+  Length: 68
+-------------------
+Product: "carrot"
+  Image: "https://seed2plant.in/cdn/shop/products/carrotseeds.jpg?v=1604032858"
+  Length: 68
+-------------------
+Product: "beetroot"
+  Image: "https://www.oifood.in/files/products/c401b43a628d3c11ef07a5ba08a766ab.jpg"
+  Length: 73
+-------------------
+Product: "Pumpkin Seed"
+  Image: "https://example.com/pumpkin.jpg"
+  Length: 31
+-------------------
+Product: "Pumpkin Seed"
+  Image: "https://example.com/pumpkin.jpg"
+  Length: 31
+-------------------
+Product: "Sunflower Seed"
+  Image: "https://example.com/sunflower.jpg"
+  Length: 33
+-------------------
+Product: "Sunflower Seed"
+  Image: "https://example.com/sunflower.jpg"
+  Length: 33
+-------------------
+Product: "Tomato"
+  Image: "https://example.com/tomato.jpg"
+  Length: 30
+-------------------
+Product: "testuser"
+  Image: ""
+  Length: 0
+-------------------
+Product: "Tulsi Seeds"
+  Image: "https://example.com/tulsi.jpg"
+  Length: 29
+-------------------
+Product: "lotus"
+  Image: "https://www.google.com/imgres?q=lotus&imgurl=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fe%2Fed%2FSacred_lotus_Nelumbo_nucifera.jpg&imgrefurl=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FNelumbo_nucifera&docid=VT_RsS_WSNLiiM&tbnid=d2hw2cVcH8TcKM&vet=12ahUKEwi63c31kc6SAxWpS2wGHY6KAAwQnPAOegQIHxAB..i&w=2312&h=2119&hcb=2&ved=2ahUKEwi63c31kc6SAxWpS2wGHY6KAAwQnPAOegQIHxAB"
+  Length: 379
+-------------------
