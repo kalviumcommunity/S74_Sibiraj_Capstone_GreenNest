@@ -1,6 +1,6 @@
 [build]
-  command = "cd Frontend && npm install && npm run build"
-  publish = "Frontend/dist"
+  command = "npm install && npm run build"
+  publish = "dist"
   # Set VITE_BACKEND_URL in Netlify env vars: https://YOUR-RENDER-APP.onrender.com/api
 
 [[redirects]]
