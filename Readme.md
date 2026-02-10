@@ -66,4 +66,4 @@ https://dashboard.render.com/web/srv-d0gugiadbo4c73bpab20/deploys/dep-d0gugiidbo
 
 Frontend deployment Link:
 
-https://dreamy-cendol-8e47bc.netlify.app/
+https://https://greennesst.netlify.app/
